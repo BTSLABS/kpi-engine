@@ -10,7 +10,7 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 cat <<EOF | sudo tee /etc/yum.repos.d/mongodb-org-5.0.repo
 [mongodb-org-5.0]
 name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/5.0/x86_64/
+baseurl=https://repo.mongodb.org/yum/redhat/7/mongodb-org/5.0/x86_64/
 gpgcheck=1
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-5.0.asc
