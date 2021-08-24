@@ -23,9 +23,11 @@ systemctl daemon-reload
 
 systemctl enable docker
 systemctl enable mongod
+systemctl enable snapd
 
 systemctl start docker
 systemctl start mongod
+systemctl start snapd
 
 docker run -d -p 8086:8086 -v /root/influx-data/:/var/lib/influxdb influxdb:1.8
 
