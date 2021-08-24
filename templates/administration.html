@@ -248,14 +248,11 @@
             'contentType': 'application/json',
             'data': JSON.stringify(config_temp[0]),
             'success': function () {
-                getConfig();
-                $(".alert").fadeIn();
-                $(".loader").hide();
-                setTimeout(function () {
-                    $(".alert").fadeOut();
-                }, 5000)
             }
-        });
+        }).fail(function(jqXHR, textStatus, error){
+            setTimeout(()=>{window.location.reload();},3000)
+            
+        })
     })
     $(document).ready(function () {
         getConfig();

@@ -1,0 +1,11 @@
+[Unit]
+Description="kpy-ngrok"
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/root/kpy/
+ExecStart=/var/lib/snapd/snap/bin/ngrok http 5000
+
+[Install]
+WantedBy=multi-user.target

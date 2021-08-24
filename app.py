@@ -75,9 +75,56 @@ def bot_post():
 def update_config():
     req_data = json.dumps(request.get_json())
     update_conf(req_data)
+    
+    call(["/var/lib/snapd/snap/bin/ngrok", "authtoken", get_conf('ngrok_token')])
+    call(["systemctl", "restart", "kpy-ngrok.service"])
+    time.sleep(5)
+    r = requests.get('http://localhost:4040/api/tunnels')
+    ngrok_conf = r.json()
+
+    ngrok_endpoint = ngrok_conf['tunnels'][0]['public_url']
+
+    url = "https://webexapis.com/v1/webhooks"
+
+    payload={}
+    headers = {
+        'Authorization': 'Bearer ' + get_conf('webexapi_token')
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    webex_webhook = response.json()
+    webex_webhook_id = webex_webhook['items'][0]['id']
+
+    url = "https://webexapis.com/v1/webhooks/" + webex_webhook_id
+
+    payload = json.dumps({
+        "targetUrl": ngrok_endpoint
+    })
+    headers = {
+        'Authorization': 'Bearer ' + get_conf('webexapi_token'),
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.request("PUT", url, headers=headers, data=payload)
+
+    dblist = client.list_database_names()
+    if "AlertDatabase" not in dblist:
+        db = client['AlertDatabase']
+        col_list = db.list_collection_names()
+        if "Alerts" not in col_list:
+            db.create_collection('Alerts')
+        if "Updates" not in col_list:
+            db.create_collection('Updates', capped=True, size=5242880, max=1)
+            db.Updates.insert_one({[]})
+
+    call(["systemctl", "restart", "kpy-housekeeping.service"])
+    call(["systemctl", "restart", "kpy-flask-app.service"])
+    
+
     return ('', 204)
-    call(["systemctl", "restart", "flask-app.service"])
-    call(["systemctl", "restart", "housekeeping.service"])
+
+    
 
 @app.route("/get_config", methods=['GET'])
 def get_config():
