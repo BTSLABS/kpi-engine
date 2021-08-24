@@ -78,7 +78,7 @@ def update_config():
     
     call(["/var/lib/snapd/snap/bin/ngrok", "authtoken", get_conf('ngrok_token')])
     call(["systemctl", "restart", "kpy-ngrok.service"])
-    
+    time.sleep(5)
     r = requests.get('http://localhost:4040/api/tunnels')
     ngrok_conf = r.json()
 
