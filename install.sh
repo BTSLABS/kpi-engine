@@ -18,7 +18,7 @@ EOF
 
 yum install -y docker-ce docker-ce-cli containerd.io mongodb-org python3 python3-pip snapd
 
-systemctl enable --now snapd.socket
+systemctl enable snapd.socket
 ln -s /var/lib/snapd/snap /snap
 snap install ngrok
 
