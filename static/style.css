@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+:root{
+    --sidebar-color:#343534;
+    --secondary-color: #F5F5F5;
+}
+
+body{
+   font-family:  'Montserrat', sans-serif !important;
+    font-size: 14px !important;
+}
+
+.form h5, label{
+    font-weight: 600;
+}
+.password-toggle{
+    position: absolute;
+    right: 25px;
+    top: 36px;
+}
+
+.form-control{
+font-size: inherit !important;;
+}
+.brand-logo{
+    width: 52px;
+}
+.submit-button{
+    color: #fff;
+    background-color: #575553;
+    border-color:  #575553;
+}
+.submit-button:hover{
+    color: #fff;
+     background-color: #343534;
+    border-color: #343534;
+}
+.blue{
+    color: dodgerblue;
+}
+.red{
+    color: red;
+}
+.orange{
+    color: #ef6200;
+}
+
+.green{
+
+    color: green;
+}
+/* sidebar */
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: fixed;
+    height: 100%;
+    width: 80px;
+    left: 0;
+    top: 0;
+    background: var(--sidebar-color);
+    padding-top: 1rem;
+
+}
+.sidebar p{
+    color: white;
+}
+
+
+.sidebar i{
+    color: white;
+     display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+
+}
+
+.sidebar p{
+    text-align: center;
+    line-height: 1;
+    font-family: Tahoma, Geneva, sans-serif;
+    margin-top: 2px;
+    font-size: 10px;
+    width: 68px;
+
+}
+
+/* main content */
+
+.device-tab-path{
+    display: flex;
+    align-items: center;
+    display: flex;
+    height: 40px;
+    padding-left: 10px;
+}
+
+.site-header{
+    background: white;
+    display: flex;
+    padding: 10px 0 10px 20px;
+    border-bottom: 1px solid #dfdfdf;
+
+}
+.main-content{
+    background: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 79px;
+    width: calc(100% - 80px);
+    height: 100%;
+    z-index: -1;
+
+}
+
+.device-header{
+    width: 100%!important;
+    height: 52px;
+    border: 1px solid #dfdfdf;
+    border-bottom: none;
+    position: relative;
+    padding: 12px;
+    background-color: #fff;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: left;
+    color: #58585b;
+}
+
+.device-table{
+
+  width: 100%;
+  background-color: #ffffff;
+  border-collapse: collapse;
+  border: 1px solid #dfdfdf;
+  color: #000000;
+
+}
+
+.device-table-div{
+    padding: 10px;
+    padding-top: 20px;
+    margin-left: 10px;
+    background-color: white;
+}
+
+.device-table thead,th{
+    background: var(--secondary-color);
+    height: 4rem;
+    border: 1px solid #dfdfdf;
+}
+
+.loader {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 9999;
+}
+
+.loader img{
+    width: 50px;
+    height: 50px;
+}
+
+th {
+     font-weight: normal;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+ td{
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #58585b;
+     line-height: 30px;
+
+}
+
+tbody tr{
+    cursor:pointer;
+}
+
+
+.device-table tbody tr:nth-child(even){
+    background: var(--secondary-color)
+}
