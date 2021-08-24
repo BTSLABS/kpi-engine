@@ -118,8 +118,9 @@ def update_config():
             db.create_collection('Updates', capped=True, size=5242880, max=1)
             db.Updates.insert_one({[]})
 
-    call(["systemctl", "restart", "kpy-flask-app.service"])
     call(["systemctl", "restart", "kpy-housekeeping.service"])
+    call(["systemctl", "restart", "kpy-flask-app.service"])
+    
 
     return ('', 204)
 
