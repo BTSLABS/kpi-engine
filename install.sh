@@ -20,6 +20,7 @@ systemctl enable kpy-flask-app.service
 systemctl enable kpy-housekeeping.service
 systemctl enable kpy-ngrok.service
 
+systemctl start kpy-flask-app.service
 echo "Installation complete. To start the app, access the web GUI through localhost:5000 and set app parameters on the Administration page."
 
 
