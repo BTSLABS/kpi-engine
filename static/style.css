@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 :root{
     --sidebar-color:#343534;
-    --secondary-color: #F5F5F5;
+    --secondary-color: #F3F5F7;
 }
 
 body{
@@ -22,7 +22,11 @@ body{
 font-size: inherit !important;;
 }
 .brand-logo{
-    width: 52px;
+    height: 35px;
+    width: auto;
+}
+.brand-logo-obs{
+    height: 20px;
 }
 .submit-button{
     color: #fff;
@@ -53,15 +57,13 @@ font-size: inherit !important;;
     display: flex;
     flex-direction: column;
     align-items: center;
-
     position: fixed;
     height: 100%;
-    width: 80px;
+    width: 85px;
     left: 0;
     top: 0;
-    background: var(--sidebar-color);
-    padding-top: 1rem;
-
+    background: linear-gradient(115deg, #61256A 15%, #B42DA6 100%);
+    padding-top: 1.5rem;
 }
 .sidebar p{
     color: white;
@@ -94,16 +96,30 @@ font-size: inherit !important;;
     align-items: center;
     display: flex;
     height: 40px;
-    padding-left: 10px;
+    padding-left: 20px;
+    font-size: 13px;
+    border-bottom: 1px solid #dfdfdf;
 }
 
 .site-header{
-    background: white;
+    background: #FAFAFA;
     display: flex;
     padding: 10px 0 10px 20px;
     border-bottom: 1px solid #dfdfdf;
-
+    align-items: center;
+    height: 60px;
+    position: relative;
 }
+
+.site-header .btslabs-logo{
+    position: absolute;
+    right: 15px;
+}
+
+.site-header .brand{
+    padding-left: 10px;
+}
+
 .main-content{
     background: var(--secondary-color);
     display: flex;
