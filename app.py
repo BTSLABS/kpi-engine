@@ -77,7 +77,7 @@ def update_config():
     update_conf(req_data)
     
     call(["/var/lib/snapd/snap/bin/ngrok", "authtoken", get_conf('ngrok_token')])
-    call(["systemctl", "restart", "kpy-ngrok.service"])
+    call(["systemctl", "restart", "kpi-engine-ngrok.service"])
     time.sleep(5)
     r = requests.get('http://localhost:4040/api/tunnels')
     ngrok_conf = r.json()
@@ -118,8 +118,8 @@ def update_config():
             db.create_collection('Updates', capped=True, size=5242880, max=1)
             db.Updates.insert_one({[]})
 
-    call(["systemctl", "restart", "kpy-housekeeping.service"])
-    call(["systemctl", "restart", "kpy-flask-app.service"])
+    call(["systemctl", "restart", "kpi-engine-housekeeping.service"])
+    call(["systemctl", "restart", "kpi-engine-app.service"])
     
 
     return ('', 204)

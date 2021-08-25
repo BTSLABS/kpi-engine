@@ -85,11 +85,12 @@ def check_tracked_time(time_window):
     if cursor.count():
         for doc in cursor:
             db.Updates.insert_one(kpi_list_dict)
-
-    if get_conf('auto_update') == 'True':
-        send_updated_notif()
-    else:
-        send_update_req_notif()
+    
+    if kpi_list:
+        if get_conf('auto_update') == 'True':
+            send_updated_notif()
+        else:
+            send_update_req_notif()
 
 def send_update_req_notif():
     kpi_list = []

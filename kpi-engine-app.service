@@ -1,10 +1,10 @@
 [Unit]
-Description="kpy-flask-app"
+Description="kpi-engine-app"
 After=network.target
 
 [Service]
 User=root
-WorkingDirectory=/root/kpy/
+WorkingDirectory=/root/kpi-engine/
 ExecStart=/usr/bin/python3 app.py
 Restart=on-failure
 

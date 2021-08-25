@@ -34,16 +34,16 @@ docker run -d -p 8086:8086 -v /root/influx-data/:/var/lib/influxdb influxdb:1.8
 
 pip3 install -r requirements.txt
 
-systemctl enable kpy-flask-app.service
-systemctl enable kpy-housekeeping.service
+systemctl enable kpi-engine-app.service
+systemctl enable kpi-engine-housekeeping.service
 
 systemctl enable snapd.socket
 ln -s /var/lib/snapd/snap /snap
 snap install ngrok
 
-systemctl enable kpy-ngrok.service
+systemctl enable kpi-engine-ngrok.service
 
-systemctl start kpy-flask-app.service
+systemctl start kpi-engine-app.service
 echo "Installation complete. To start the app, access the web GUI through localhost:5000 and set app parameters on the Administration page."
 
 
