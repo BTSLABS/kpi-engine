@@ -116,8 +116,16 @@ font-size: inherit !important;;
     right: 15px;
 }
 
+@font-face {
+    font-family: "Nebulosa";
+    src: url("./font/Graviton\ -\ NebulosaBlackDisplaySolid.otf");
+}
+
 .site-header .brand{
     padding-left: 10px;
+    font-family: "Nebulosa";
+    font-size: 26px;
+    color: #88227D;
 }
 
 .main-content{
