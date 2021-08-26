@@ -13,7 +13,9 @@
 
 </head>
 <body>
-
+    <div class="loader d-none">
+        <img src="{{ url_for('static', filename='rhombus.gif') }}" />
+    </div>
     <div class="sidebar">
 
         <div class="kpi-engine sidebar-item">
@@ -53,6 +55,13 @@
             <a href="/administration">
                 <i class="fas fa-user-cog fa-2x" style="margin-bottom: 8px;"></i>
                 <p>Administration</p>
+            </a>
+        </div>
+
+        <div class="sidebar-item logout">
+            <a href="javascript:;" id="logout" class="cursor-pointer">
+                <i class="fas fa-sign-out-alt fa-2x" style="margin-bottom: 8px;"></i>
+                <p>Logout</p>
             </a>
         </div>
     </div>
@@ -139,12 +148,6 @@
         </div>
     </div>
 </div>
-
-<script>
-
-
-</script>
-
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

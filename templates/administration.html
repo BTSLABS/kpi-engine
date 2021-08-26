@@ -57,6 +57,13 @@
             <p>Administration</p>
         </a>
     </div>
+
+    <div class="sidebar-item logout">
+        <a href="javascript:;" id="logout" class="cursor-pointer">
+            <i class="fas fa-sign-out-alt fa-2x" style="margin-bottom: 8px;"></i>
+            <p>Logout</p>
+        </a>
+    </div>
 </div>
 
 <div class="main-content" style="height:auto;">
@@ -287,16 +294,16 @@
     })
     $(document).ready(function () {
         getConfig();
-        $('.password-toggle').click(function (){
-             $('#password-toggle').toggleClass('fa-eye fa-eye-slash');
+        // $('.password-toggle').click(function (){
+        //      $('#password-toggle').toggleClass('fa-eye fa-eye-slash');
 
-             if( $('#password').attr('type') === 'password'){
-                 $('#password').attr('type','text');
-             } else{
-                 $('#password').attr('type','password');
-             }
+        //      if( $('#password').attr('type') === 'password'){
+        //          $('#password').attr('type','text');
+        //      } else{
+        //          $('#password').attr('type','password');
+        //      }
 
-        })
+        // })
     });
 </script>
 

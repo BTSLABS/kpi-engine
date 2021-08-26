@@ -16,7 +16,9 @@
     <title>CAHI Threshold Automatization | Kpi Profiles</title>
 </head>
 <body>
-
+    <div class="loader d-none">
+        <img src="{{ url_for('static', filename='rhombus.gif') }}" />
+    </div>
     <div class="sidebar">
 
         <div class="kpi-engine sidebar-item">
@@ -56,6 +58,13 @@
             <a href="/administration">
                 <i class="fas fa-user-cog fa-2x" style="margin-bottom: 8px;"></i>
                 <p>Administration</p>
+            </a>
+        </div>
+
+        <div class="sidebar-item logout">
+            <a href="javascript:;" id="logout" class="cursor-pointer">
+                <i class="fas fa-sign-out-alt fa-2x" style="margin-bottom: 8px;"></i>
+                <p>Logout</p>
             </a>
         </div>
     </div>
@@ -184,7 +193,7 @@
             var kpiRefs = document.querySelectorAll("[data-kpi='" + id + "']");
             kpiRefs.forEach(kpiRef => {
                 if(typeof kpiRef.dataset.kpiref != undefined){
-                    $.get(`http://10.20.101.180:5000/${hostName}/${kpiRef.dataset.kpi}/${kpiRef.dataset.kpiref}/health`, function(resp){
+                    $.get(`/${hostName}/${kpiRef.dataset.kpi}/${kpiRef.dataset.kpiref}/health`, function(resp){
                         if(resp == "1"){
                             $(kpiRef).find(".hStat").html(`<i class="fas fa-exclamation-circle red"></i> Update Required`);
                         }else if(resp == "0"){
@@ -208,7 +217,7 @@
         const kpiHealths = document.querySelectorAll(".kpiHealth");
         if(kpiHealths.length){
             kpiHealths.forEach( singleHealth => {
-                $.get(`http://10.20.101.180:5000/${hostName}/${singleHealth.dataset.kpi}/health`, function(resp){
+                $.get(`/${hostName}/${singleHealth.dataset.kpi}/health`, function(resp){
                     if(resp == "1"){
                         $(singleHealth).html(`<i class="fas fa-exclamation-circle red"></i> Update Required`)
                     }else if(resp == "0"){

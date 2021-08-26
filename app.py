@@ -123,11 +123,7 @@ def update_config():
 
     call(["systemctl", "restart", "kpi-engine-housekeeping.service"])
     call(["systemctl", "restart", "kpi-engine-app.service"])
-    
-
     return ('', 204)
-
-    
 
 @app.route("/get_config", methods=['GET'])
 def get_config():
