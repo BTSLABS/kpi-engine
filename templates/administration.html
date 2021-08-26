@@ -1,80 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-
+    {% include 'headerlinks.html' %}
     <title>Administration | BTS OBSERVER</title>
-
 </head>
 <body>
-    <div class="loader" style="display: none;">
-        <img src="{{ url_for('static', filename='loader.gif') }}"/>
-    </div>
+<div class="loader" style="display: none;">
+    <img src="{{ url_for('static', filename='loader.gif') }}"/>
+</div>
 <div class="sidebar">
-
-    <div class="kpi-engine sidebar-item">
-        <div class="main">
-            <!-- <i class="fas fa-server fa-2x"></i> -->
-            <img src="{{ url_for('static', filename='kpi-engine.svg') }}"/>
-            <p>KPI Engine</p>
-        </div>
-        <ul class="submenu">
-            <li><a href="/devices"><i class="fas fa-server fa-2x"></i>Device Management</a></li>
-        </ul>
-    </div>
-
-    <div class="ai-engine sidebar-item">
-        <div class="main">
-            <!-- <i class="fas fa-server fa-2x"></i> -->
-            <img src="{{ url_for('static', filename='ai-engine.svg') }}"/>
-            <p>AI/ML Engine</p>
-        </div>
-    </div>
-    <div class="kpi-devbox sidebar-item">
-        <div class="main">
-            <!-- <i class="fas fa-server fa-2x"></i> -->
-            <img src="{{ url_for('static', filename='kpi-devbox.svg') }}"/>
-            <p>KPIDevBox</p>
-        </div>
-    </div>
-    <div class="rb-automation sidebar-item">
-        <div class="main">
-            <!-- <i class="fas fa-server fa-2x"></i> -->
-            <img src="{{ url_for('static', filename='rb-automation.svg') }}"/>
-            <p>Rule Based Automation</p>
-        </div>
-    </div>
-
-    <div class="sidebar-item administration">
-        <a href="/administration">
-            <i class="fas fa-user-cog fa-2x" style="margin-bottom: 8px;"></i>
-            <p>Administration</p>
-        </a>
-    </div>
-
-    <div class="sidebar-item logout">
-        <a href="javascript:;" id="logout" class="cursor-pointer">
-            <i class="fas fa-sign-out-alt fa-2x" style="margin-bottom: 8px;"></i>
-            <p>Logout</p>
-        </a>
-    </div>
+    {% include 'sidebar.html' %}
 </div>
 
 <div class="main-content" style="height:auto;">
-    <div class="site-header">
-        <div class="brand">
-            OBSERVER
-        </div>
-        <div class="btslabs-logo">
-            <img class="brand-logo" src="{{ url_for('static', filename='btslabs-logo.png') }}"/>
-        </div>
-    </div>
+    {% include 'header.html' %}
 <div class="container">
     <div class="col-12 mt-3 ">
 
@@ -206,19 +145,7 @@
     </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-<script type=text/javascript src="{{ url_for('static',filename='jquery-3.6.0.min.js') }}"></script>
-<script type=text/javascript src="{{ url_for('static', filename='main.js') }}"></script>
-
+{% include 'footerlinks.html' %}
 </body>
 
 <script>
