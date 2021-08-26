@@ -24,7 +24,7 @@ function myFunction(name){
 $(document).on('click', '#logout', function(){
     $(".loader").removeClass("d-none");
     setTimeout(()=>{
-        window.location = "/login";
+        window.location = "/";
     }, 500)
 })
 

@@ -26,11 +26,11 @@ client = pymongo.MongoClient('mongodb://localhost:27017/')
 db = client['AlertDatabase']
 collection = db['Alerts']
 
-@app.route('/login')
+@app.route('/')
 def login():
     return render_template("login.html")
 
-@app.route('/')
+@app.route('/devices')
 def devices():
     response = get_all_devices()
     for row in response['data']:
