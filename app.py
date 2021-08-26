@@ -26,6 +26,9 @@ client = pymongo.MongoClient('mongodb://localhost:27017/')
 db = client['AlertDatabase']
 collection = db['Alerts']
 
+@app.route('/login')
+def login():
+    return render_template("login.html")
 
 @app.route('/')
 def devices():
