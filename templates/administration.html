@@ -18,16 +18,42 @@
     </div>
 <div class="sidebar">
 
-    <div>
-        <a href="/">
-            <i class="fas fa-server fa-2x"></i>
-            <p>Device&nbsp; <br>Management</p>
-        </a>
+    <div class="kpi-engine sidebar-item">
+        <div class="main">
+            <!-- <i class="fas fa-server fa-2x"></i> -->
+            <img src="{{ url_for('static', filename='kpi-engine.svg') }}"/>
+            <p>KPI Engine</p>
+        </div>
+        <ul class="submenu">
+            <li><a href="/"><i class="fas fa-server fa-2x"></i>Device Management</a></li>
+        </ul>
     </div>
 
-    <div>
+    <div class="ai-engine sidebar-item">
+        <div class="main">
+            <!-- <i class="fas fa-server fa-2x"></i> -->
+            <img src="{{ url_for('static', filename='ai-engine.svg') }}"/>
+            <p>AI/ML Engine</p>
+        </div>
+    </div>
+    <div class="kpi-devbox sidebar-item">
+        <div class="main">
+            <!-- <i class="fas fa-server fa-2x"></i> -->
+            <img src="{{ url_for('static', filename='kpi-devbox.svg') }}"/>
+            <p>KPIDevBox</p>
+        </div>
+    </div>
+    <div class="rb-automation sidebar-item">
+        <div class="main">
+            <!-- <i class="fas fa-server fa-2x"></i> -->
+            <img src="{{ url_for('static', filename='rb-automation.svg') }}"/>
+            <p>Rule Based Automation</p>
+        </div>
+    </div>
+
+    <div class="sidebar-item administration">
         <a href="/administration">
-            <i class="fas fa-user-cog fa-2x"></i>
+            <i class="fas fa-user-cog fa-2x" style="margin-bottom: 8px;"></i>
             <p>Administration</p>
         </a>
     </div>
@@ -36,7 +62,7 @@
 <div class="main-content" style="height:auto;">
     <div class="site-header">
         <div class="brand">
-            KPI ENGINE
+            OBSERVER
         </div>
         <div class="btslabs-logo">
             <img class="brand-logo" src="{{ url_for('static', filename='btslabs-logo.png') }}"/>
