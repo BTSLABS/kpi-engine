@@ -6,31 +6,59 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
           integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+          
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
     <title>CAHI Threshold Automatization | Kpi Profiles</title>
 </head>
 <body>
 
-<div class="sidebar">
-    <div>
-        <a href="/">
-            <i class="fas fa-server fa-2x"></i>
-            <p>Device&nbsp; <br>Management</p>
-        </a>
-    </div>
+    <div class="sidebar">
 
-    <div>
-        <a href="/administration">
-            <i class="fas fa-user-cog fa-2x"></i>
-            <p>Administration</p>
-        </a>
+        <div class="kpi-engine sidebar-item">
+            <div class="main">
+                <!-- <i class="fas fa-server fa-2x"></i> -->
+                <img src="{{ url_for('static', filename='kpi-engine.svg') }}"/>
+                <p>KPI Engine</p>
+            </div>
+            <ul class="submenu">
+                <li><a href="/"><i class="fas fa-server fa-2x"></i>Device Management</a></li>
+            </ul>
+        </div>
+    
+        <div class="ai-engine sidebar-item">
+            <div class="main">
+                <!-- <i class="fas fa-server fa-2x"></i> -->
+                <img src="{{ url_for('static', filename='ai-engine.svg') }}"/>
+                <p>AI/ML Engine</p>
+            </div>
+        </div>
+        <div class="kpi-devbox sidebar-item">
+            <div class="main">
+                <!-- <i class="fas fa-server fa-2x"></i> -->
+                <img src="{{ url_for('static', filename='kpi-devbox.svg') }}"/>
+                <p>KPIDevBox</p>
+            </div>
+        </div>
+        <div class="rb-automation sidebar-item">
+            <div class="main">
+                <!-- <i class="fas fa-server fa-2x"></i> -->
+                <img src="{{ url_for('static', filename='rb-automation.svg') }}"/>
+                <p>Rule Based Automation</p>
+            </div>
+        </div>
+    
+        <div class="sidebar-item administration">
+            <a href="/administration">
+                <i class="fas fa-user-cog fa-2x" style="margin-bottom: 8px;"></i>
+                <p>Administration</p>
+            </a>
+        </div>
     </div>
-</div>
 
 <div class="main-content">
     <div class="site-header">
@@ -41,66 +69,67 @@
             <img class="brand-logo" src="{{ url_for('static', filename='btslabs-logo.png') }}"/>
         </div>
     </div>
+    <div class="container-fluid px-0">
+        <div class="device-tab-path mt-1">
+            <a href="{{ url_for('devices') }}">Devices&nbsp;</a> / {{ host_name }}
 
-    <div class="device-tab-path mt-1">
-        <a href="{{ url_for('devices') }}">Devices&nbsp;</a> / {{ host_name }}
-
-    </div>
-
-
-    <div class="device-table-div">
-        <div class="device-header">
-            {{ host_name }}
         </div>
 
-        {% if submitted_kpi != "0" %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>KPI profile {{submitted_kpi}} updated!</strong> 
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        {% endif %}
-        <table class="device-table">
-            <thead>
-            <tr>
-                <th>Kpi Profile</th>
-                <th>Kpi Number</th>
-                <th>Health Status</th>
-                <th>Threshold</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
 
+        <div class="device-table-div">
+            <div class="device-header">
+                {{ host_name }}
+            </div>
 
-            {% for row in data.device_kpi_profiles.devices %}
+            {% if submitted_kpi != "0" %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>KPI profile {{submitted_kpi}} updated!</strong> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+            <table class="device-table">
+                <thead>
                 <tr>
+                    <th>Kpi Profile</th>
+                    <th>Kpi Number</th>
+                    <th>Health Status</th>
+                    <th>Threshold</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
 
-                    {% for profile in row.kpi_device_profiles %}
-                        <td>{{ profile.kpi_profile_id }}
 
-                        <td>{{ profile.kpi_refs|length }} <i class="fas fa-info-circle blue" id="info"
-                                                             data-toggle="modal"
-                                                             data-target="#myModal"
-                                                             onclick="showKpi('{{ profile.kpi_profile_id }}')"></i></td>
-     
-                        <td class="kpiHealth" data-kpi="{{profile.kpi_profile_id}}" data-hostname="{{host_name}}"></td>
-                        <td>
-                        </td>
-                        {% for kpi in profile.kpi_refs %}
+                {% for row in data.device_kpi_profiles.devices %}
+                    <tr>
 
+                        {% for profile in row.kpi_device_profiles %}
+                            <td>{{ profile.kpi_profile_id }}
+
+                            <td>{{ profile.kpi_refs|length }} <i class="fas fa-info-circle blue" id="info"
+                                                                data-toggle="modal"
+                                                                data-target="#myModal"
+                                                                onclick="showKpi('{{ profile.kpi_profile_id }}')"></i></td>
+        
+                            <td class="kpiHealth" data-kpi="{{profile.kpi_profile_id}}" data-hostname="{{host_name}}"></td>
+                            <td>
+                            </td>
+                            {% for kpi in profile.kpi_refs %}
+
+
+                            {% endfor %}
+                            </tr>
 
                         {% endfor %}
-                        </tr>
 
-                    {% endfor %}
-
-            {% endfor %}
+                {% endfor %}
 
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -109,13 +138,13 @@
         <div class="modal-content">
 
             <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Update Thresholds</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-header d-inline-flex align-items-center">
+                <h6 class="modal-title">Update Thresholds</h6>
+                <a type="button" class="close p-0 pr-3" data-dismiss="modal" style="font-size: 35px;">&times;</a>
             </div>
 
             <!-- Modal body -->
-            <div class="modal-body">
+            <div class="modal-body pt-0">
                 {% for row in data.device_kpi_profiles.devices %}
 
                     {% for profile in row.kpi_device_profiles %}
@@ -127,7 +156,9 @@
                                 <span class="py-1"><strong>State: </strong> {{ kpi.state }}</span><br>
                                 <span class="py-1"><strong>Cancade: </strong>{{ kpi.cadence }}</span><br>
                                 <span class="py-1"><strong>Kpi Health: </strong> <span class="hStat"></span></span><br>
-                                <input class="btn btn-primary mt-2" type="submit" value="Update threshold">
+                                <div class="d-inline-flex justify-content-end w-100 mt-2">
+                                    <input class="btn btn-primary ml-2" type="submit" value="Update threshold">
+                                </div>
                             </form>
                         {% endfor %}
 
@@ -136,9 +167,7 @@
 
 
             </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
+            <div class="modal-footer py-2">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
 
