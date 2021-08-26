@@ -320,18 +320,13 @@ tbody tr{
 
 .login-wrapper{
     height: 100vh;
+    background: url(/static/btslabs-bg.jpg);
 }
 .login-form{
-    position: absolute;
-    max-width: 530px;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    padding: 22% 60px;
+    padding: 20px 30px;
     background: #f5f5ff;
-    left: 50%;
-    transform: translateX(-50%);
     height: inherit;
+    max-width: 550px;
 }
 .login-wrapper .login-form h1{
     font-family: "Nebulosa";
