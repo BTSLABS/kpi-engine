@@ -1,93 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% include 'headerlinks.html' %}
-    <title>Device Management | BTS OBSERVER</title>
-
-</head>
-<body>
-    <div class="loader d-none">
-        <img src="{{ url_for('static', filename='rhombus.gif') }}" />
-    </div>
-    <div class="sidebar">
-        {% include 'sidebar.html' %}
-    </div>
-
-<div class="main-content">
-    {% include 'header.html' %}
-    <div class="container-fluid px-0">
-        <div class="device-tab-path mt-1">
-            Device Management / Network Devices
-
-        </div>
-        <div>
-            <div class="device-table-div">
-                <div class="device-header">
-                    Devices
+    <head>
+        {% include 'common/headerlinks.html' %}
+        <title>Device Management | BTS OBSERVER</title>
+    </head>
+    <body>
+        {% include 'common/sidebar.html' %}
+        <div class="main-content">
+            {% include 'common/header.html' %}
+            <div class="container-fluid px-0">
+                <div class="device-tab-path mt-1">
+                    Device Management / Network Devices
                 </div>
+                <div>
+                    <div class="device-table-div">
+                        <div class="device-header">
+                            Devices
+                        </div>
+                        <table class="device-table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Reachability State</th>
+                                <th>IP Address</th>
+                                <th>Host Name</th>
+                                <th>Health Status</th>
+                                <th>Administration State</th>
+                                <th>Operational State</th>
+                                <th>Last Updated Time</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in data.data %}
+                                <tr data-href="{{ url_for('kpi', host_name=row.host_name) }}" data-host="{{row.host_name}}">
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        {% if row.reachability_state.split("_")[2] == "REACHABLE" %}
+                                            <i class="fas fa-check-circle green"></i>
+                                        {% else %}
+                                            <i class="fas fa-minus-circle orange"></i>
+                                        {% endif %}
+                                        {{ row.reachability_state.lower().title().split("_")[2] }}
+                                    </td>
+                                    <td>{{ row.node_ip.inet_addr }}</td>
+                                    <td>{{ row.host_name }}</td>
+                                    <td class="deviceHealth"> </td>
+                                    <td>
+                                        {% if row.admin_state.split("_")[3] == "UP" %}
+                                            <i class="fas fa-check-circle green"></i>
+                                        {% else %}
+                                            <i class="fas fa-exclamation-circle red"></i>
+                                        {% endif %}
+                                        {{ row.admin_state.lower().title().split("_")[3] }}
+                                    </td>
+                                    <td>
+                                        {% if row.operational_state.split("_")[3] == "OK" %}
+                                            <i class="fas fa-arrow-circle-up green"></i>
+                                        {% else %}
+                                            <i class="fas fa-exclamation-circle red"></i>
+                                        {% endif %}
 
-                <table class="device-table">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>Reachability State</th>
-                        <th>IP Address</th>
-                        <th>Host Name</th>
-                        <th>Health Status</th>
-                        <th>Administration State</th>
-                        <th>Operational State</th>
-                        <th>Last Updated Time</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-
-                    {% for row in data.data %}
-
-                        <tr data-href="{{ url_for('kpi', host_name=row.host_name) }}" data-host="{{row.host_name}}">
-                            <td><input type="checkbox"></td>
-
-                            <td>{% if row.reachability_state.split("_")[2] == "REACHABLE" %}
-                                <i class="fas fa-check-circle green"></i>
-                            {% else %}
-
-                                <i class="fas fa-minus-circle orange"></i>
-                            {% endif %}
-                                {{ row.reachability_state.lower().title().split("_")[2] }}</td>
-                            <td>{{ row.node_ip.inet_addr }}</td>
-                            <td>{{ row.host_name }}</td>
-                            <td class="deviceHealth"> </td>
-                            <td>
-                                {% if row.admin_state.split("_")[3] == "UP" %}
-                                    <i class="fas fa-check-circle green"></i>
-                                {% else %}
-                                    <i class="fas fa-exclamation-circle red"></i>
-                                {% endif %}
-                                {{ row.admin_state.lower().title().split("_")[3] }}
-                            </td>
-                            <td>
-                                {% if row.operational_state.split("_")[3] == "OK" %}
-                                    <i class="fas fa-arrow-circle-up green"></i>
-                                {% else %}
-                                    <i class="fas fa-exclamation-circle red"></i>
-                                {% endif %}
-
-                                {{ row.operational_state.split("_")[3] }}
-                            </td>
-                            <td>{{ row.last_upd_time }}</td>
-
-                        </tr>
-
-                    {% endfor %}
-
-
-                    </tbody>
-                </table>
+                                        {{ row.operational_state.split("_")[3] }}
+                                    </td>
+                                    <td>{{ row.last_upd_time }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-{% include 'footerlinks.html' %}
-</body>
+        {% include 'common/footerlinks.html' %}
+    </body>
 </html>

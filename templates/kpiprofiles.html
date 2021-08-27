@@ -1,174 +1,153 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    {% include 'headerlinks.html' %}
-    <title>Kpi Profiles | BTS OBSERVER</title>
-</head>
-<body>
-    <div class="loader d-none">
-        <img src="{{ url_for('static', filename='rhombus.gif') }}" />
-    </div>
-    <div class="sidebar">
-        {% include 'sidebar.html' %}
-    </div>
+    <head>
+        {% include 'common/headerlinks.html' %}
+        <title>Kpi Profiles | BTS OBSERVER</title>
+    </head>
+    <body>
+        {% include 'common/sidebar.html' %}
+        <div class="main-content">
+            {% include 'common/header.html' %}
+            <div class="container-fluid px-0">
+                <div class="device-tab-path mt-1">
+                    <a href="{{ url_for('devices') }}">Devices&nbsp;</a> / {{ host_name }}
+                </div>
+                <div class="device-table-div">
+                    <div class="device-header">
+                        {{ host_name }}
+                    </div>
 
-<div class="main-content">
-    {% include 'header.html' %}
-    <div class="container-fluid px-0">
-        <div class="device-tab-path mt-1">
-            <a href="{{ url_for('devices') }}">Devices&nbsp;</a> / {{ host_name }}
-
+                    {% if submitted_kpi != "0" %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>KPI profile {{submitted_kpi}} updated!</strong> 
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endif %}
+                    <table class="device-table">
+                        <thead>
+                        <tr>
+                            <th>Kpi Profile</th>
+                            <th>Kpi Number</th>
+                            <th>Health Status</th>
+                            <th>Threshold</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in data.device_kpi_profiles.devices %}
+                            {% for profile in row.kpi_device_profiles %}
+                                <tr>
+                                    <td>{{ profile.kpi_profile_id }}</td>
+                                    <td>{{ profile.kpi_refs|length }} <i class="fas fa-info-circle blue" id="info"
+                                                                        data-toggle="modal"
+                                                                        data-target="#myModal"
+                                                                        onclick="showKpi('{{ profile.kpi_profile_id }}')"></i></td>
+                                    <td class="kpiHealth" data-kpi="{{profile.kpi_profile_id}}" data-hostname="{{host_name}}"></td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
-        <div class="device-table-div">
-            <div class="device-header">
-                {{ host_name }}
-            </div>
+                    <!-- Modal Header -->
+                    <div class="modal-header d-inline-flex align-items-center">
+                        <h6 class="modal-title">Update Thresholds</h6>
+                        <a type="button" class="close p-0 pr-3" data-dismiss="modal" style="font-size: 35px;">&times;</a>
+                    </div>
 
-            {% if submitted_kpi != "0" %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>KPI profile {{submitted_kpi}} updated!</strong> 
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            {% endif %}
-            <table class="device-table">
-                <thead>
-                <tr>
-                    <th>Kpi Profile</th>
-                    <th>Kpi Number</th>
-                    <th>Health Status</th>
-                    <th>Threshold</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
+                    <!-- Modal body -->
+                    <div class="modal-body pt-0">
+                        {% for row in data.device_kpi_profiles.devices %}
 
-
-                {% for row in data.device_kpi_profiles.devices %}
-                    <tr>
-
-                        {% for profile in row.kpi_device_profiles %}
-                            <td>{{ profile.kpi_profile_id }}
-
-                            <td>{{ profile.kpi_refs|length }} <i class="fas fa-info-circle blue" id="info"
-                                                                data-toggle="modal"
-                                                                data-target="#myModal"
-                                                                onclick="showKpi('{{ profile.kpi_profile_id }}')"></i></td>
-        
-                            <td class="kpiHealth" data-kpi="{{profile.kpi_profile_id}}" data-hostname="{{host_name}}"></td>
-                            <td>
-                            </td>
-                            {% for kpi in profile.kpi_refs %}
-
+                            {% for profile in row.kpi_device_profiles %}
+                                {% for kpi in profile.kpi_refs %}
+                                    <form data-kpi="{{ profile.kpi_profile_id }}" data-kpiref="{{kpi.kpi_id}}" class="kpiRef mt-3"
+                                        action="{{ url_for('update_device',device_name=row.device_id, kpi_profile_name= profile.kpi_profile_id, kpi_name= kpi.kpi_id ) }}">
+                                        <span class="py-1"><strong>KPI id: </strong>{{ kpi.kpi_id }}</span> <br>
+                                        <span class="py-1"><strong>Link: </strong>{{ kpi.link }}</span> <br>
+                                        <span class="py-1"><strong>State: </strong> {{ kpi.state }}</span><br>
+                                        <span class="py-1"><strong>Cancade: </strong>{{ kpi.cadence }}</span><br>
+                                        <span class="py-1"><strong>Kpi Health: </strong> <span class="hStat"></span></span><br>
+                                        <div class="d-inline-flex justify-content-end w-100 mt-2">
+                                            <input class="btn btn-primary ml-2" type="submit" value="Update threshold" style="display: none;">
+                                        </div>
+                                    </form>
+                                {% endfor %}
 
                             {% endfor %}
-                            </tr>
-
                         {% endfor %}
 
-                {% endfor %}
 
+                    </div>
+                    <div class="modal-footer py-2">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
 
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header d-inline-flex align-items-center">
-                <h6 class="modal-title">Update Thresholds</h6>
-                <a type="button" class="close p-0 pr-3" data-dismiss="modal" style="font-size: 35px;">&times;</a>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body pt-0">
-                {% for row in data.device_kpi_profiles.devices %}
-
-                    {% for profile in row.kpi_device_profiles %}
-                        {% for kpi in profile.kpi_refs %}
-                            <form data-kpi="{{ profile.kpi_profile_id }}" data-kpiref="{{kpi.kpi_id}}" class="kpiRef mt-3"
-                                  action="{{ url_for('update_device',device_name=row.device_id, kpi_profile_name= profile.kpi_profile_id, kpi_name= kpi.kpi_id ) }}">
-                                <span class="py-1"><strong>KPI id: </strong>{{ kpi.kpi_id }}</span> <br>
-                                <span class="py-1"><strong>Link: </strong>{{ kpi.link }}</span> <br>
-                                <span class="py-1"><strong>State: </strong> {{ kpi.state }}</span><br>
-                                <span class="py-1"><strong>Cancade: </strong>{{ kpi.cadence }}</span><br>
-                                <span class="py-1"><strong>Kpi Health: </strong> <span class="hStat"></span></span><br>
-                                <div class="d-inline-flex justify-content-end w-100 mt-2">
-                                    <input class="btn btn-primary ml-2" type="submit" value="Update threshold">
-                                </div>
-                            </form>
-                        {% endfor %}
-
-                    {% endfor %}
-                {% endfor %}
-
-
-            </div>
-            <div class="modal-footer py-2">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<script>
-    const hostName = '{{host_name}}';
-    function showKpi(id) {
-        $(".kpiRef").hide();
-        $("[data-kpi='" + id + "']").show();
-        $(".kpiRef .btn").show();
-            var kpiRefs = document.querySelectorAll("[data-kpi='" + id + "']");
-            kpiRefs.forEach(kpiRef => {
-                if(typeof kpiRef.dataset.kpiref != undefined){
-                    $.get(`/${hostName}/${kpiRef.dataset.kpi}/${kpiRef.dataset.kpiref}/health`, function(resp){
-                        if(resp == "1"){
-                            $(kpiRef).find(".hStat").html(`<i class="fas fa-exclamation-circle red"></i> Update Required`);
-                        }else if(resp == "0"){
-                            $(kpiRef).find(".hStat").html(`<i class="fas fa-arrow-circle-up green"></i> OK`);
-                            $(kpiRef).find(".btn").hide();
-                        }
-                    })
-                    // if(kpiRef.dataset.kpiref == "pulse_cpu_threshold"){
-                    //     $(kpiRef).find(".hStat").html(`<i class="fas fa-exclamation-circle red"></i> Update Required`);
-
-                    // } else {
-                    //     $(kpiRef).find(".hStat").html(`<i class="fas fa-arrow-circle-up green"></i> OK`);
-                    //     $(kpiRef).find(".btn").hide();
-                    // }
-                }
-            })
-    }
-
-    $(document).ready(function () {
-        $(".kpiRef").hide();
-        const kpiHealths = document.querySelectorAll(".kpiHealth");
-        if(kpiHealths.length){
-            kpiHealths.forEach( singleHealth => {
-                $.get(`/${hostName}/${singleHealth.dataset.kpi}/health`, function(resp){
-                    if(resp == "1"){
-                        $(singleHealth).html(`<i class="fas fa-exclamation-circle red"></i> Update Required`)
-                    }else if(resp == "0"){
-                        $(singleHealth).html(`<i class="fas fa-arrow-circle-up green"></i> OK`)
+        {% include 'common/footerlinks.html' %}
+        <script>
+            const hostName = '{{host_name}}';
+            function showKpi(id) {
+                $(".kpiRef").hide();
+                $("[data-kpi='" + id + "']").show();
+                // $(".kpiRef .btn").show();
+                var kpiRefs = document.querySelectorAll("[data-kpi='" + id + "']");
+                kpiRefs.forEach(kpiRef => {
+                    if(typeof kpiRef.dataset.kpiref != undefined){
+                        $.get(`/${hostName}/${kpiRef.dataset.kpi}/${kpiRef.dataset.kpiref}/health`, function(resp){
+                            if(resp == "1"){
+                                $(kpiRef).find(".hStat").html(`<i class="fas fa-exclamation-circle red"></i> Update Required`);
+                                $(kpiRef).find(".btn").show();
+                            }else if(resp == "0"){
+                                $(kpiRef).find(".hStat").html(`<i class="fas fa-arrow-circle-up green"></i> OK`);
+                                $(kpiRef).find(".btn").hide();
+                            }
+                        })
+                        // if(kpiRef.dataset.kpiref == "pulse_cpu_utilization"){
+                        //     $(kpiRef).find(".hStat").html(`<i class="fas fa-exclamation-circle red"></i> Update Required`);
+                        //     $(kpiRef).find(".btn").show();
+                        // } else {
+                        //     $(kpiRef).find(".hStat").html(`<i class="fas fa-arrow-circle-up green"></i> OK`);
+                        //     $(kpiRef).find(".btn").hide();
+                        // }
                     }
                 })
-                // if(singleHealth.dataset.kpi == "emre_deneme_6"){
-                //     $(singleHealth).html(`<i class="fas fa-exclamation-circle red"></i> Update Required`)
-                // }else{
-                //     $(singleHealth).html(`<i class="fas fa-arrow-circle-up green"></i> OK`)
-                // }
+            }
+
+            $(document).ready(function () {
+                $(".kpiRef").hide();
+                const kpiHealths = document.querySelectorAll(".kpiHealth");
+                if(kpiHealths.length){
+                    kpiHealths.forEach( singleHealth => {
+                        $.get(`/${hostName}/${singleHealth.dataset.kpi}/health`, function(resp){
+                            if(resp == "1"){
+                                $(singleHealth).html(`<i class="fas fa-exclamation-circle red"></i> Update Required`)
+                            }else if(resp == "0"){
+                                $(singleHealth).html(`<i class="fas fa-arrow-circle-up green"></i> OK`)
+                            }
+                        })
+                        // if(singleHealth.dataset.kpi == "emre_deneme"){
+                        //     $(singleHealth).html(`<i class="fas fa-exclamation-circle red"></i> Update Required`)
+                        // }else{
+                        //     $(singleHealth).html(`<i class="fas fa-arrow-circle-up green"></i> OK`)
+                        // }
+                    })
+                }
             })
-        }
-    })
-</script>
-{% include 'footerlinks.html' %}
-</body>
+        </script>
+    </body>
 </html>

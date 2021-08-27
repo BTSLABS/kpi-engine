@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include 'headerlinks.html' %}
+    {% include 'common/headerlinks.html' %}
     <title>Login | BTS OBSERVER</title>
 
 </head>
 <body>
     <div class="login-wrapper d-flex justify-content-center">
         <div class="loader d-none">
-            <img src="{{ url_for('static', filename='rhombus.gif') }}" />
+            <img src="{{ url_for('static', filename='img/rhombus.gif') }}" />
         </div>
         <div class="login-mask"></div>
-        <div class="login-form col-4 d-flex align-items-center">
+        <div class="login-form col-lg-4 col-md-6 col-sm-12 col-xs-12 d-flex align-items-center">
             <div class="col-12 px-0">
                 <h1 class="mb-2 text-center">OBSERVER</h1>
                 <span class="login-error" style="display: none;">You have entered an invalid username or password. Please try again.</span>
@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-{% include 'footerlinks.html' %}
+{% include 'common/footerlinks.html' %}
 </body>
 <script>
     $(document).on('click', '#submitLogin', function(){
@@ -37,10 +37,7 @@
         if($("#username").val() != "btsobserver" && $("#password").val() != "btsobserver" ){
             $(".login-error").fadeIn();
         }else{
-            $(".loader").removeClass("d-none");
-            setTimeout(()=>{
-                window.location = "/devices";
-            }, 500)
+            window.location = "/devices";
         }
     })
     $(document).on('keyup', '.login-form input', function(){

@@ -38,3 +38,10 @@ $('.password-toggle').click(function (){
     }
 
 })
+
+$(document).ready(function(){
+    $(".loader").removeClass("d-none");
+    setTimeout(()=>{
+        $(".loader").addClass("d-none");
+    }, 500)
+})
