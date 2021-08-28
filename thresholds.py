@@ -1,8 +1,8 @@
+from statsmodels.tsa.arima.model import ARIMA
+
 def get_cpu_threshold_thresholds(data):
     threshold_data = data["pulse_cpu_threshold"]["Cisco-IOS-XR-wdsysmon-fd-oper:system-monitoring/cpu-utilization"]["mean_total_cpu_five_minute"]
-#     level2_threshold = threshold_data.mean() + 1.96 * threshold_data.var() / (len(threshold_data)**0.5)
-    level1_threshold = threshold_data.mean() + threshold_data.var()
-    level2_threshold = threshold_data.mean() + 2*threshold_data.var()
+    level1_threshold, level2_threshold = calculate_threshold_with_arima(threshold_data)
     
     thresholds = {
         "pulse_cpu_threshold_template.tick": {
@@ -12,3 +12,11 @@ def get_cpu_threshold_thresholds(data):
     }
     
     return thresholds
+
+
+
+def calculate_threshold_with_arima(pd_serie):
+    model = ARIMA(pd_serie, order=(2,0,2))
+    model_fit = model.fit()
+    result = model_fit.get_forecast()
+    return (result.conf_int(alpha=0.1)["upper mean_total_cpu_five_minute"].values[0], result.conf_int(alpha=0.05)["upper mean_total_cpu_five_minute"].values[0])
