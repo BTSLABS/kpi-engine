@@ -1,0 +1,334 @@
+/*--- Globals ---*/
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+    @font-face {
+        font-family: "Nebulosa";
+        src: url("../fonts/Graviton\ -\ NebulosaBlackDisplaySolid.otf");
+    }
+    :root{
+        --sidebar-color:#343534;
+        --secondary-color: #F3F5F7;
+    }
+    body{
+        font-family:  'Montserrat', sans-serif !important;
+        font-size: 14px !important;
+    }
+    tbody tr{
+        cursor:pointer;
+    }
+    th {
+        font-weight: normal;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    td{
+        padding-left: 10px;
+        padding-right: 10px;
+        color: #58585b;
+        line-height: 30px;
+    
+    }
+    .blue{
+        color: dodgerblue;
+    }
+    .red{
+        color: #dc3545;
+    }
+    .orange{
+        color: #ef6200;
+    }
+    .green{
+        color: #1cb084;
+    }
+    .btn{
+        border-radius: 0;
+        font-size: 14px;
+        color: #FAFAFA;
+    }
+    .btn:hover{
+        opacity: .85;   
+    }
+    
+    .btn-primary,
+    .btn-primary:hover {
+        background: #1cb084;
+        border: #1cb084;
+    }
+    
+    .btn-danger {
+        color: #fafafa;
+        background:#dc3545;
+        border: #dc3545;
+    }
+    .modal-content{
+        border-radius: 0;
+    }    
+
+/*--- Form Elements ---*/
+    .form h5, label{
+        font-weight: 600;
+    }
+    .password-toggle{
+        position: absolute;
+        right: 25px;
+        top: 36px;
+    }
+    .form-control{
+        font-size: inherit !important;;
+    }
+    .submit-button{
+        color: #fff;
+        background-color: #575553;
+        border-color:  #575553;
+    }
+    .submit-button:hover{
+        color: #fff;
+         background-color: #343534;
+        border-color: #343534;
+    }
+
+/*--- Sidebar ---*/
+    .sidebar{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+        height: 100%;
+        width: 85px;
+        left: 0;
+        top: 0;
+        background: linear-gradient(115deg, #61256A 15%, #B42DA6 100%);
+        padding-top: 1.5rem;
+    }
+
+    .sidebar .sidebar-item > a > i,
+    .sidebar .sidebar-item > span > i{
+        color: white;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .sidebar p{
+        color: #fafafa;
+        text-align: center;
+        line-height: 1;
+        font-family: Tahoma, Geneva, sans-serif;
+        margin-top: 2px;
+        margin-bottom: 0;
+        font-size: 10px;
+    }
+    .sidebar .sidebar-item{
+        margin: 14px 0;
+        position: relative;
+        width: 100%;
+        text-align: center;
+    }
+    .sidebar .sidebar-item.logout{
+        position: absolute;
+        bottom: 25px;
+    }
+    
+    .sidebar .sidebar-item img{
+        width: 35px;
+        display: flex;
+        margin: auto;
+        margin-bottom: 8px;
+    }
+    
+    .sidebar .sidebar-item.ai-engine,
+    .sidebar .sidebar-item.kpi-devbox,
+    .sidebar .sidebar-item.rb-automation
+    {
+        pointer-events: none;
+        opacity: .6;
+    }
+    
+    .sidebar .sidebar-item .main,
+    .sidebar .sidebar-item.administration,
+    .sidebar .sidebar-item.logout{
+        margin-left: 2px;
+    }
+    
+    .sidebar .sidebar-item:hover .main,
+    .sidebar .sidebar-item.administration:hover,
+    .sidebar .sidebar-item.logout:hover{
+        border-left: 2px solid #fafafa;
+        margin-left: 0;
+    }
+    
+    .sidebar .sidebar-item .submenu{
+        position: absolute;
+        background: linear-gradient(115deg, #B42DA6 35%, #61256A 100%);
+        list-style-type: none;
+        padding: 6px 12px;
+        min-width: 210px;
+        color: #fafafa;
+        left: 85px;
+        top: 0px;
+        display: none;
+        box-shadow: 0 2px 1px 0 rgb(0 0 0 / 16%), 0 1px 5px 0 rgb(0 0 0 / 9%);
+        text-align: left;
+    }
+    .sidebar .sidebar-item .submenu a{
+        color: #fafafa;
+        display: inline-flex;
+        align-items: center;
+    }
+    .sidebar .sidebar-item a:hover{
+        text-decoration: none;
+    }
+    
+    .sidebar .sidebar-item .submenu a > i{ 
+        margin-right: 8px;
+        font-size: 18px;
+    }
+    .sidebar .sidebar-item:hover .submenu{
+        display: block;
+    }
+
+/*--- Header ---*/
+    .site-header{
+        background: #FAFAFA;
+        display: flex;
+        padding: 10px 0 10px 20px;
+        border-bottom: 1px solid #dfdfdf;
+        align-items: center;
+        height: 60px;
+        width: calc(100% - 80px);
+        position: fixed;
+        z-index: 9;
+    }
+    .site-header .btslabs-logo{
+        position: absolute;
+        right: 15px;
+    }
+    .site-header .brand{
+        padding-left: 10px;
+        font-family: "Nebulosa";
+        font-size: 26px;
+        color: #88227D;
+    }
+    .brand-logo{
+        height: 35px;
+        width: auto;
+    }
+    .brand-logo-obs{
+        height: 20px;
+    }
+
+/*--- Loader ---*/
+    .loader{
+        width: 100vw;
+        height: 100vh;
+        background: #fff;
+        position: fixed;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .loader img{
+        width: 120px;
+        height: 120px;
+    }  
+
+/*--- Login ---*/
+    .login-wrapper{
+        height: 100vh;
+        background: url(/static/img/btslabs-bg.jpg);
+    }
+    .login-form{
+        padding: 20px 30px;
+        background: #f5f5ff;
+        height: inherit;
+        max-width: 550px;
+    }
+    .login-wrapper .login-form h1{
+        font-family: "Nebulosa";
+        font-weight: 500;
+        font-size: 32px;
+    }
+    .login-wrapper .login-form input{
+        border-radius: 0;
+    }
+    .login-wrapper .login-mask{
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 44.79%, rgba(0, 0, 0, 0.35) 65%, #000 100%);
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .login-wrapper .login-error{
+        background: #dc3545;
+        color: #fafafa;
+        padding: 6px 12px;
+        width: 100%;
+        margin-bottom: 10px;
+        display: block;
+    }
+    .login-form .password-toggle{
+        right: 15px;
+        color: #314351;
+    }
+
+/*--- Devices & KPIs ---*/
+    .main-content{
+        background: var(--secondary-color);
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        left: 79px;
+        width: calc(100% - 80px);
+        height: 100%;
+        z-index: -1;
+    }
+    .main-content .container,
+    .main-content .container-fluid{
+        margin-top: 56px;
+    }
+    .device-header{
+        width: 100%!important;
+        height: 52px;
+        border: 1px solid #dfdfdf;
+        border-bottom: none;
+        position: relative;
+        padding: 12px;
+        background-color: #fff;
+        font-size: 20px;
+        line-height: 28px;
+        text-align: left;
+        color: #58585b;
+    }
+    .device-tab-path{
+        display: flex;
+        align-items: center;
+        display: flex;
+        height: 40px;
+        padding-left: 20px;
+        font-size: 13px;
+        border-bottom: 1px solid #dfdfdf;
+    }
+    .device-table{
+        width: 100%;
+        background-color: #ffffff;
+        border-collapse: collapse;
+        border: 1px solid #dfdfdf;
+        color: #000000;
+    }
+    .device-table-div{
+        padding: 10px;
+        padding-top: 20px;
+        margin-left: 10px;
+        background-color: white;
+    }
+    .device-table thead,th{
+        background: var(--secondary-color);
+        height: 4rem;
+        border: 1px solid #dfdfdf;
+    }
+    .device-table tbody tr:nth-child(even){
+        background: var(--secondary-color)
+    }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'common/headerlinks.html' %}
+    <title>Login | BTS OBSERVER</title>
+
+</head>
+<body>
+    <div class="login-wrapper d-flex justify-content-center">
+        <div class="loader d-none">
+            <img src="{{ url_for('static', filename='img/rhombus.gif') }}" />
+        </div>
+        <div class="login-mask"></div>
+        <div class="login-form col-lg-4 col-md-6 col-sm-12 col-xs-12 d-flex align-items-center">
+            <div class="col-12 px-0">
+                <h1 class="mb-2 text-center">OBSERVER</h1>
+                <span class="login-error" style="display: none;">You have entered an invalid username or password. Please try again.</span>
+                  <div class="form-group mb-3">
+                      <label for="username">Username</label>
+                      <input type="text" class="form-control" id="username">
+                  </div>
+                  <div class="form-group position-relative mb-3">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control" id="password">
+                      <span class="password-toggle"> <i id="password-toggle" class="fas fa-eye"></i></span>
+                  </div>
+                <a class="btn btn-primary btn-block mb-2" id="submitLogin" style="background:#314351;border-color:#314351;color:#fafafa">Login</a>
+                <small>&trade; BTS OBSERVER - All Rights Reserved.</small>
+            </div>
+        </div>
+    </div>
+{% include 'common/footerlinks.html' %}
+</body>
+<script>
+    $(document).on('click', '#submitLogin', function(){
+        // mock login controls
+        if($("#username").val() != "btsobserver" && $("#password").val() != "btsobserver" ){
+            $(".login-error").fadeIn();
+        }else{
+            window.location = "/devices";
+        }
+    })
+    $(document).on('keyup', '.login-form input', function(){
+        $(".login-error").fadeOut();
+    })
+    $(document).on('keyup', '.login-form input', function(e){
+        if(e.keyCode == 13){
+            $('#submitLogin').click();
+        }
+    })
+</script>
+</html>

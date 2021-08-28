@@ -1,303 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <head>
+        {% include 'common/headerlinks.html' %}
+        <title>Administration | BTS OBSERVER</title>
+    </head>
+    <body>
+        {% include 'common/sidebar.html' %}
+        <div class="main-content" style="height:auto;">
+            {% include 'common/header.html' %}
+            <div class="container">
+                <div class="col-12 mt-3 ">
+                    <div class="alert alert-success alert-dismissible fade show" style="display: none;position: fixed;z-index: 999;right: 5%;" role="alert">
+                        <strong>Updated successfully!</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="adminForm" class="form col-12  px-0  row justify-content-center">
+                        <div class="col-lg-4 ">
+                            <h5>Administration</h5>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group col-6">
+                                <label for="cwapi">CW API:</label>
+                                <input type="text" class="form-control" id="cwapi" value="0.0.0.0" placeholder="CWD API">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="username">User Name:</label>
+                                <input type="text" class="form-control" id="username" value="admin" placeholder="Username">
+                            </div>
+                            <div class="form-group position-relative col-6">
+                                <label for="password">Password:</label>
+                                <input type="password" class="form-control" id="password" placeholder="Password">
+                            <span class="password-toggle" > <i  id="password-toggle" class="fas fa-eye"></i></span>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="mongodb">MongoDB:</label>
+                                <input type="text" class="form-control" id="mongodb" placeholder="MongoDB" value="">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="check_period">Check Period:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="check_period" placeholder="Check Period"
+                                        value="8080">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">Seconds</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="track_time">Track Time:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="track_time" placeholder="Track Time"
+                                        value="influx db">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">Day(s)</span>
+                                    </div>
+                                </div>
+                            </div>
 
-    <title>Administration | CAHI Threshold Automatization</title>
+                            <div class="form-group col-6">
+                                <label for="admin_email">Email:</label>
+                                <input type="email" class="form-control" id="admin_email" placeholder="Email" value="">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="influxdb_ip">InfluxDB IP:</label>
+                                <input type="text" class="form-control" id="influxdb_ip" placeholder="Influxdb IP" value="0.0.0.0">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="influxdb_port">InfluxDB Port:</label>
+                                <input type="text" class="form-control" id="influxdb_port" placeholder="Influxdb Port" value="8080">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="influxdb_name">InfluxDB Name:</label>
+                                <input type="text" class="form-control" id="influxdb_name" placeholder="Influxdb Name"
+                                    value="influx db">
+                            </div>
 
-</head>
-<body>
-    <div class="loader" style="display: none;">
-        <img src="{{ url_for('static', filename='loader.gif') }}"/>
-    </div>
-<div class="sidebar">
-
-    <div class="kpi-engine sidebar-item">
-        <div class="main">
-            <!-- <i class="fas fa-server fa-2x"></i> -->
-            <img src="{{ url_for('static', filename='kpi-engine.svg') }}"/>
-            <p>KPI Engine</p>
-        </div>
-        <ul class="submenu">
-            <li><a href="/"><i class="fas fa-server fa-2x"></i>Device Management</a></li>
-        </ul>
-    </div>
-
-    <div class="ai-engine sidebar-item">
-        <div class="main">
-            <!-- <i class="fas fa-server fa-2x"></i> -->
-            <img src="{{ url_for('static', filename='ai-engine.svg') }}"/>
-            <p>AI/ML Engine</p>
-        </div>
-    </div>
-    <div class="kpi-devbox sidebar-item">
-        <div class="main">
-            <!-- <i class="fas fa-server fa-2x"></i> -->
-            <img src="{{ url_for('static', filename='kpi-devbox.svg') }}"/>
-            <p>KPIDevBox</p>
-        </div>
-    </div>
-    <div class="rb-automation sidebar-item">
-        <div class="main">
-            <!-- <i class="fas fa-server fa-2x"></i> -->
-            <img src="{{ url_for('static', filename='rb-automation.svg') }}"/>
-            <p>Rule Based Automation</p>
-        </div>
-    </div>
-
-    <div class="sidebar-item administration">
-        <a href="/administration">
-            <i class="fas fa-user-cog fa-2x" style="margin-bottom: 8px;"></i>
-            <p>Administration</p>
-        </a>
-    </div>
-</div>
-
-<div class="main-content" style="height:auto;">
-    <div class="site-header">
-        <div class="brand">
-            OBSERVER
-        </div>
-        <div class="btslabs-logo">
-            <img class="brand-logo" src="{{ url_for('static', filename='btslabs-logo.png') }}"/>
-        </div>
-    </div>
-<div class="container">
-    <div class="col-12 mt-3 ">
-
-        <div class="alert alert-success alert-dismissible fade show" style="display: none;position: fixed;z-index: 999;right: 5%;" role="alert">
-            <strong>Updated successfully!</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-
-        <div id="adminForm" class="form col-12  px-0  row justify-content-center">
-            <div class="col-lg-4 ">
-                <h5>Administration</h5>
-            </div>
-            <div class="col-md-8">
-                <div class="form-group col-6">
-                    <label for="cwapi">CW API:</label>
-                    <input type="text" class="form-control" id="cwapi" value="0.0.0.0" placeholder="CWD API">
-                </div>
-                <div class="form-group col-6">
-                    <label for="username">User Name:</label>
-                    <input type="text" class="form-control" id="username" value="admin" placeholder="Username">
-                </div>
-                <div class="form-group position-relative col-6">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                   <span class="password-toggle" > <i  id="password-toggle" class="fas fa-eye"></i></span>
-                </div>
-                <div class="form-group col-6">
-                    <label for="mongodb">MongoDB:</label>
-                    <input type="text" class="form-control" id="mongodb" placeholder="MongoDB" value="">
-                </div>
-                <div class="form-group col-6">
-                    <label for="check_period">Check Period:</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="check_period" placeholder="Check Period"
-                               value="8080">
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2">Seconds</span>
+                            <div class="form-group col-6">
+                                <label for="auto_update">Auto Update:</label>
+                                <select class="form-control" id="auto_update">
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <hr class="my-5">
+                        </div>
+                    </div>
+                    <div id="webexForm" class="form col-12  px-0  row justify-content-center">
+                        <div class="col-md-4">
+                            <h5>Webex Integration</h5>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group col-6">
+                                <label for="apitoken">Webex Teams API Token:</label>
+                                <input type="text" class="form-control" id="webexapi_token" value="" placeholder="">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="spaceid">Webex Teams Space ID:</label>
+                                <input type="text" class="form-control" id="room_id" value="" placeholder="">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="ngrok">ngrok User Token:</label>
+                                <input type="text" class="form-control" id="ngrok_token" value="" placeholder="">
+                            </div>
+                            <!-- <div class="form-group col-6">
+                                <label for="email_notif">Enable email notifications</label>
+                                <select class="form-control" id="email_notf">
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
+                                </select>
+                            </div> -->
+                            <div class="form-group col-6">
+                                <label for="webex_enable">Enable Webex Teams notifications</label>
+                                <select class="form-control" id="webex_enable">
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
+                                </select>
+                            </div>
+                            <div class="col-12 d-flex justify-content-start align-items-center">
+                                <button class="btn submit-button mt-2 " id="adminSub">Submit</button>
+                                <small style="padding-left: 10px;">Services will be restarted.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-6">
-                    <label for="track_time">Track Time:</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="track_time" placeholder="Track Time"
-                               value="influx db">
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2">Day(s)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group col-6">
-                    <label for="admin_email">Email:</label>
-                    <input type="email" class="form-control" id="admin_email" placeholder="Email" value="">
-                </div>
-                <div class="form-group col-6">
-                    <label for="influxdb_ip">InfluxDB IP:</label>
-                    <input type="text" class="form-control" id="influxdb_ip" placeholder="Influxdb IP" value="0.0.0.0">
-                </div>
-                <div class="form-group col-6">
-                    <label for="influxdb_port">InfluxDB Port:</label>
-                    <input type="text" class="form-control" id="influxdb_port" placeholder="Influxdb Port" value="8080">
-                </div>
-                <div class="form-group col-6">
-                    <label for="influxdb_name">InfluxDB Name:</label>
-                    <input type="text" class="form-control" id="influxdb_name" placeholder="Influxdb Name"
-                           value="influx db">
-                </div>
-
-                <div class="form-group col-6">
-                    <label for="auto_update">Auto Update:</label>
-                    <select class="form-control" id="auto_update">
-                        <option value="True">Yes</option>
-                        <option value="False">No</option>
-                    </select>
-                </div>
-                <!-- <div class="col-12 d-flex justify-content-start">
-                    <button class="btn submit-button mt-2" id="adminSub">Submit</button>
-                </div> -->
-            </div>
-            <div class="col-md-12">
-                <hr class="my-5">
             </div>
         </div>
-        <div id="webexForm" class="form col-12  px-0  row justify-content-center">
-            <div class="col-md-4">
-                <h5>Webex Integration</h5>
-            </div>
-            <div class="col-md-8">
-                 <div class="form-group col-6">
-                    <label for="apitoken">Webex Teams API Token:</label>
-                    <input type="text" class="form-control" id="webexapi_token" value="" placeholder="">
-                </div>
-                <div class="form-group col-6">
-                    <label for="spaceid">Webex Teams Space ID:</label>
-                    <input type="text" class="form-control" id="room_id" value="" placeholder="">
-                </div>
-                <div class="form-group col-6">
-                    <label for="ngrok">ngrok User Token:</label>
-                    <input type="text" class="form-control" id="ngrok_token" value="" placeholder="">
-                </div>
-                 <!-- <div class="form-group col-6">
-                    <label for="email_notif">Enable email notifications</label>
-                    <select class="form-control" id="email_notf">
-                        <option value="True">Yes</option>
-                        <option value="False">No</option>
-                    </select>
-                </div> -->
-                 <div class="form-group col-6">
-                    <label for="webex_enable">Enable Webex Teams notifications</label>
-                    <select class="form-control" id="webex_enable">
-                        <option value="True">Yes</option>
-                        <option value="False">No</option>
-                    </select>
-                </div>
-                <div class="col-12 d-flex justify-content-start align-items-center">
-                    <button class="btn submit-button mt-2 " id="adminSub">Submit</button>
-                    <small style="padding-left: 10px;">Services will be restarted.</small>
-                </div>
-            </div>
+        {% include 'common/footerlinks.html' %}
+    </body>
 
+    <script>
+        var config_temp = [{
+            "url": "https://10.1.182.13:30603",
+            "username": "ekucuk",
+            "admin_email": "ekucuk@test.test",
+            "password": "password",
+            "mongodb": "mongodb://localhost:27017/",
+            "check_period": 3600,
+            "track_time": 14,
+            "auto_update": "False",
+            "influxdb_ip": "127.0.0.1",
+            "influxdb_port": 8086,
+            "influxdb_name": "telemetry",
+            "ngrok_token": "",
+            "room_id":"",
+            "webex_enable":"",
+            "webexapi_token":""
+        }];
+        var getConfig = function () {
 
-            <div class="col-md-12">
-                <hr>
-            </div>
-        </div>
-    </div>
-    </div>
-</div>
+            $.get(`/get_config`, function (element) {
+                if (element) {
+                    element = JSON.parse(element);
+                    $('#cwapi').val(element.url)
+                    $('#username').val(element.username)
+                    $('#admin_email').val(element.admin_email)
+                    $('#password').val(element.password)
+                    $('#mongodb').val(element.mongodb)
+                    $('#check_period').val(element.check_period)
+                    $('#track_time').val(element.track_time)
+                    $('#influxdb_ip').val(element.influxdb_ip)
+                    $('#influxdb_port').val(element.influxdb_port)
+                    $('#influxdb_name').val(element.influxdb_name)
+                    $('#auto_update').val(element.auto_update)
+                    $('#ngrok_token').val(element.ngrok_token)
+                    $('#room_id').val(element.room_id)
+                    $('#webex_enable').val(element.webex_enable)
+                    $('#webexapi_token').val(element.webexapi_token)
+                }
+            })
+        }
+        $("#adminSub").click(function () {
+            config_temp[0].url = $('#cwapi').val();
+            config_temp[0].username = $('#username').val();
+            config_temp[0].password = $('#password').val();
+            config_temp[0].admin_email = $('#admin_email').val();
+            config_temp[0].mongodb = $('#mongodb').val();
+            config_temp[0].check_period = parseInt($('#check_period').val());
+            config_temp[0].track_time = parseInt($('#track_time').val());
+            config_temp[0].influxdb_ip = $('#influxdb_ip').val();
+            config_temp[0].influxdb_port = $('#influxdb_port').val();
+            config_temp[0].influxdb_name = $('#influxdb_name').val();
+            config_temp[0].auto_update = $('#auto_update').val();
+            config_temp[0].ngrok_token = $('#ngrok_token').val();
+            config_temp[0].room_id = $('#room_id').val();
+            config_temp[0].webex_enable = $('#webex_enable').val();
+            config_temp[0].webexapi_token = $('#webexapi_token').val();
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-<script type=text/javascript src="{{ url_for('static',filename='jquery-3.6.0.min.js') }}"></script>
-<script type=text/javascript src="{{ url_for('static', filename='main.js') }}"></script>
-
-</body>
-
-<script>
-    var config_temp = [{
-        "url": "https://10.1.182.13:30603",
-        "username": "ekucuk",
-        "admin_email": "ekucuk@test.test",
-        "password": "password",
-        "mongodb": "mongodb://localhost:27017/",
-        "check_period": 3600,
-        "track_time": 14,
-        "auto_update": "False",
-        "influxdb_ip": "127.0.0.1",
-        "influxdb_port": 8086,
-        "influxdb_name": "telemetry",
-        "ngrok_token": "",
-        "room_id":"",
-        "webex_enable":"",
-        "webexapi_token":""
-    }];
-    var getConfig = function () {
-
-        $.get(`/get_config`, function (element) {
-            if (element) {
-                element = JSON.parse(element);
-                $('#cwapi').val(element.url)
-                $('#username').val(element.username)
-                $('#admin_email').val(element.admin_email)
-                $('#password').val(element.password)
-                $('#mongodb').val(element.mongodb)
-                $('#check_period').val(element.check_period)
-                $('#track_time').val(element.track_time)
-                $('#influxdb_ip').val(element.influxdb_ip)
-                $('#influxdb_port').val(element.influxdb_port)
-                $('#influxdb_name').val(element.influxdb_name)
-                $('#auto_update').val(element.auto_update)
-                $('#ngrok_token').val(element.ngrok_token)
-                $('#room_id').val(element.room_id)
-                $('#webex_enable').val(element.webex_enable)
-                $('#webexapi_token').val(element.webexapi_token)
-            }
+            $(".loader").removeClass("d-none");
+            $.ajax({
+                'type': 'POST',
+                'url': `/update_config`,
+                'contentType': 'application/json',
+                'data': JSON.stringify(config_temp[0]),
+                'success': function () {
+                }
+            }).fail(function(jqXHR, textStatus, error){
+                setTimeout(()=>{window.location.reload();},3000)
+                
+            })
         })
-    }
-    $("#adminSub").click(function () {
-        config_temp[0].url = $('#cwapi').val();
-        config_temp[0].username = $('#username').val();
-        config_temp[0].password = $('#password').val();
-        config_temp[0].admin_email = $('#admin_email').val();
-        config_temp[0].mongodb = $('#mongodb').val();
-        config_temp[0].check_period = parseInt($('#check_period').val());
-        config_temp[0].track_time = parseInt($('#track_time').val());
-        config_temp[0].influxdb_ip = $('#influxdb_ip').val();
-        config_temp[0].influxdb_port = $('#influxdb_port').val();
-        config_temp[0].influxdb_name = $('#influxdb_name').val();
-        config_temp[0].auto_update = $('#auto_update').val();
-        config_temp[0].ngrok_token = $('#ngrok_token').val();
-        config_temp[0].room_id = $('#room_id').val();
-        config_temp[0].webex_enable = $('#webex_enable').val();
-        config_temp[0].webexapi_token = $('#webexapi_token').val();
-
-        $(".loader").show();
-        $.ajax({
-            'type': 'POST',
-            'url': `/update_config`,
-            'contentType': 'application/json',
-            'data': JSON.stringify(config_temp[0]),
-            'success': function () {
-            }
-        }).fail(function(jqXHR, textStatus, error){
-            setTimeout(()=>{window.location.reload();},3000)
-            
-        })
-    })
-    $(document).ready(function () {
-        getConfig();
-        $('.password-toggle').click(function (){
-             $('#password-toggle').toggleClass('fa-eye fa-eye-slash');
-
-             if( $('#password').attr('type') === 'password'){
-                 $('#password').attr('type','text');
-             } else{
-                 $('#password').attr('type','password');
-             }
-
-        })
-    });
-</script>
-
+        $(document).ready(function () {
+            getConfig();
+        });
+    </script>
 </html>

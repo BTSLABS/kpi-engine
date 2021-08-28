@@ -1,162 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-
-    <title>CAHI Threshold Automatization | Device Management</title>
-
-</head>
-<body>
-
-    <div class="sidebar">
-
-        <div class="kpi-engine sidebar-item">
-            <div class="main">
-                <!-- <i class="fas fa-server fa-2x"></i> -->
-                <img src="{{ url_for('static', filename='kpi-engine.svg') }}"/>
-                <p>KPI Engine</p>
-            </div>
-            <ul class="submenu">
-                <li><a href="/"><i class="fas fa-server fa-2x"></i>Device Management</a></li>
-            </ul>
-        </div>
-    
-        <div class="ai-engine sidebar-item">
-            <div class="main">
-                <!-- <i class="fas fa-server fa-2x"></i> -->
-                <img src="{{ url_for('static', filename='ai-engine.svg') }}"/>
-                <p>AI/ML Engine</p>
-            </div>
-        </div>
-        <div class="kpi-devbox sidebar-item">
-            <div class="main">
-                <!-- <i class="fas fa-server fa-2x"></i> -->
-                <img src="{{ url_for('static', filename='kpi-devbox.svg') }}"/>
-                <p>KPIDevBox</p>
-            </div>
-        </div>
-        <div class="rb-automation sidebar-item">
-            <div class="main">
-                <!-- <i class="fas fa-server fa-2x"></i> -->
-                <img src="{{ url_for('static', filename='rb-automation.svg') }}"/>
-                <p>Rule Based Automation</p>
-            </div>
-        </div>
-    
-        <div class="sidebar-item administration">
-            <a href="/administration">
-                <i class="fas fa-user-cog fa-2x" style="margin-bottom: 8px;"></i>
-                <p>Administration</p>
-            </a>
-        </div>
-    </div>
-
-<div class="main-content">
-    <div class="site-header">
-        <div class="brand">
-            OBSERVER
-        </div>
-        <div class="btslabs-logo">
-            <img class="brand-logo" src="{{ url_for('static', filename='btslabs-logo.png') }}"/>
-        </div>
-    </div>
-    <div class="container-fluid px-0">
-        <div class="device-tab-path mt-1">
-            Device Management / Network Devices
-
-        </div>
-        <div>
-            <div class="device-table-div">
-                <div class="device-header">
-                    Devices
+    <head>
+        {% include 'common/headerlinks.html' %}
+        <title>Device Management | BTS OBSERVER</title>
+    </head>
+    <body>
+        {% include 'common/sidebar.html' %}
+        <div class="main-content">
+            {% include 'common/header.html' %}
+            <div class="container-fluid px-0">
+                <div class="device-tab-path mt-1">
+                    Device Management / Network Devices
                 </div>
+                <div>
+                    <div class="device-table-div">
+                        <div class="device-header">
+                            Devices
+                        </div>
+                        <table class="device-table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Reachability State</th>
+                                <th>IP Address</th>
+                                <th>Host Name</th>
+                                <th>Health Status</th>
+                                <th>Administration State</th>
+                                <th>Operational State</th>
+                                <th>Last Updated Time</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in data.data %}
+                                <tr data-href="{{ url_for('kpi', host_name=row.host_name) }}" data-host="{{row.host_name}}">
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        {% if row.reachability_state.split("_")[2] == "REACHABLE" %}
+                                            <i class="fas fa-check-circle green"></i>
+                                        {% else %}
+                                            <i class="fas fa-minus-circle orange"></i>
+                                        {% endif %}
+                                        {{ row.reachability_state.lower().title().split("_")[2] }}
+                                    </td>
+                                    <td>{{ row.node_ip.inet_addr }}</td>
+                                    <td>{{ row.host_name }}</td>
+                                    <td class="deviceHealth"> </td>
+                                    <td>
+                                        {% if row.admin_state.split("_")[3] == "UP" %}
+                                            <i class="fas fa-check-circle green"></i>
+                                        {% else %}
+                                            <i class="fas fa-exclamation-circle red"></i>
+                                        {% endif %}
+                                        {{ row.admin_state.lower().title().split("_")[3] }}
+                                    </td>
+                                    <td>
+                                        {% if row.operational_state.split("_")[3] == "OK" %}
+                                            <i class="fas fa-arrow-circle-up green"></i>
+                                        {% else %}
+                                            <i class="fas fa-exclamation-circle red"></i>
+                                        {% endif %}
 
-                <table class="device-table">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>Reachability State</th>
-                        <th>IP Address</th>
-                        <th>Host Name</th>
-                        <th>Health Status</th>
-                        <th>Administration State</th>
-                        <th>Operational State</th>
-                        <th>Last Updated Time</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-
-                    {% for row in data.data %}
-
-                        <tr data-href="{{ url_for('kpi', host_name=row.host_name) }}" data-host="{{row.host_name}}">
-                            <td><input type="checkbox"></td>
-
-                            <td>{% if row.reachability_state.split("_")[2] == "REACHABLE" %}
-                                <i class="fas fa-check-circle green"></i>
-                            {% else %}
-
-                                <i class="fas fa-minus-circle orange"></i>
-                            {% endif %}
-                                {{ row.reachability_state.lower().title().split("_")[2] }}</td>
-                            <td>{{ row.node_ip.inet_addr }}</td>
-                            <td>{{ row.host_name }}</td>
-                            <td class="deviceHealth"> </td>
-                            <td>
-                                {% if row.admin_state.split("_")[3] == "UP" %}
-                                    <i class="fas fa-check-circle green"></i>
-                                {% else %}
-                                    <i class="fas fa-exclamation-circle red"></i>
-                                {% endif %}
-                                {{ row.admin_state.lower().title().split("_")[3] }}
-                            </td>
-                            <td>
-                                {% if row.operational_state.split("_")[3] == "OK" %}
-                                    <i class="fas fa-arrow-circle-up green"></i>
-                                {% else %}
-                                    <i class="fas fa-exclamation-circle red"></i>
-                                {% endif %}
-
-                                {{ row.operational_state.split("_")[3] }}
-                            </td>
-                            <td>{{ row.last_upd_time }}</td>
-
-                        </tr>
-
-                    {% endfor %}
-
-
-                    </tbody>
-                </table>
+                                        {{ row.operational_state.split("_")[3] }}
+                                    </td>
+                                    <td>{{ row.last_upd_time }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<script>
-
-
-</script>
-
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-<script type=text/javascript src="{{ url_for('static',filename='jquery-3.6.0.min.js') }}"></script>
-<script type=text/javascript src="{{ url_for('static', filename='main.js') }}"></script>
-
-</body>
+        {% include 'common/footerlinks.html' %}
+    </body>
 </html>
