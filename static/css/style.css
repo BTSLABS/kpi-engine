@@ -86,8 +86,8 @@
     }
     .password-toggle{
         position: absolute;
-        right: 25px;
-        top: 36px;
+        right: 24px;
+        top: 30px;
     }
     .form-control{
         font-size: inherit !important;;
@@ -101,6 +101,16 @@
         color: #fff;
          background-color: #343534;
         border-color: #343534;
+    }
+    .form .form-title{
+        color: #61256A;
+    }
+    .form-group > label {
+        margin-bottom: 0;
+    }
+    .form-group input,
+    .form-group .input-group-text {
+        border-radius: 2px;
     }
 
 /*--- Sidebar ---*/
