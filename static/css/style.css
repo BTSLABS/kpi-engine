@@ -116,7 +116,7 @@
         background: linear-gradient(115deg, #61256A 15%, #B42DA6 100%);
         padding-top: 1rem;
         top: 89px;
-        height: calc(100% - 90px);
+        height: calc(100% - 89px);
         z-index: 9;
     }
 
