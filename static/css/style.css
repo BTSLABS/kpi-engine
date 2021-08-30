@@ -114,7 +114,7 @@
         left: 0;
         /* top: 0; */
         background: linear-gradient(115deg, #61256A 15%, #B42DA6 100%);
-        padding-top: 1.5rem;
+        padding-top: 1rem;
         top: 89px;
         height: calc(100% - 90px);
         z-index: 9;
@@ -146,7 +146,7 @@
     }
     .sidebar .sidebar-item.logout{
         position: absolute;
-        bottom: 25px;
+        bottom: 1rem;
     }
     
     .sidebar .sidebar-item img{
