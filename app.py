@@ -164,18 +164,18 @@ def update_device(device_name, kpi_profile_name, kpi_name):
     db_name = get_conf('influxdb_name')
     client = InfluxDBClient(get_conf('influxdb_ip'), get_conf('influxdb_port'), db_name)
 
-    devices = get_enabled_devices_from_kpi_profile_name(Config.token, kpi_profile_name)
+    devices = get_enabled_devices_from_kpi_profile_name(get_token(), kpi_profile_name)
 
-    disable_job_response = disable_kpi_profiles(Config.token, devices, [kpi_profile_name])
+    disable_job_response = disable_kpi_profiles(get_token(), devices, [kpi_profile_name])
 
-    while check_job_status(Config.token, disable_job_response["txid"])["state"] != "Success" and check_job_status(Config.token, disable_job_response["txid"])["error"] != "Profile not found on any device" and check_job_status(Config.token, disable_job_response["txid"])["error"] != "Profile not found on Device":
+    while check_job_status(get_token(), disable_job_response["txid"])["state"] != "Success" and check_job_status(get_token(), disable_job_response["txid"])["error"] != "Profile not found on any device" and check_job_status(get_token(), disable_job_response["txid"])["error"] != "Profile not found on Device":
         time.sleep(5)
 
-    kpi_profile = get_kpi_profile_information(Config.token, kpi_profile_name)
+    kpi_profile = get_kpi_profile_information(get_token(), kpi_profile_name)
 
     kpi_names = get_kpis_from_kpi_profile(kpi_profile)
 
-    sensors = get_sensors_for_kpis(Config.token, kpi_names)
+    sensors = get_sensors_for_kpis(get_token(), kpi_names)
 
     queries = query_builder_for_kpis(sensors, db_name, start_time, end_time, sources, Config.influxdb_time)
 
@@ -187,11 +187,11 @@ def update_device(device_name, kpi_profile_name, kpi_name):
 
     thresholds = get_cpu_threshold_thresholds(data)
     kpi_profile = update_kpi_payload(kpi_profile, kpi_name, thresholds)
-    update_kpi_profile(Config.token, kpi_profile)
+    update_kpi_profile(get_token(), kpi_profile)
 
-    enable_job_response = enable_kpi_profiles(Config.token, devices, [kpi_profile_name])
+    enable_job_response = enable_kpi_profiles(get_token(), devices, [kpi_profile_name])
 
-    while check_job_status(Config.token, enable_job_response["txid"])["state"] != "Success" and check_job_status(Config.token, enable_job_response["txid"])["error"] != "Profile already applied on device":
+    while check_job_status(get_token(), enable_job_response["txid"])["state"] != "Success" and check_job_status(get_token(), enable_job_response["txid"])["error"] != "Profile already applied on device":
         time.sleep(5)
 
 
@@ -203,7 +203,7 @@ def update_device(device_name, kpi_profile_name, kpi_name):
 
 def get_all_devices():
     headers = {
-        'Authorization': 'Bearer ' + Config.token,
+        'Authorization': 'Bearer ' + get_token(),
         'Content-Type': 'application/json'
     }
     payload = json.dumps({})
@@ -216,7 +216,7 @@ def get_all_devices():
 
 def get_device_kpi(host_name):
     headers = {
-        'Authorization': 'Bearer ' + Config.token,
+        'Authorization': 'Bearer ' + get_token(),
         'Content-Type': 'application/json'
     }
     payload = json.dumps({"devices": [host_name]})
