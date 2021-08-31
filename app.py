@@ -85,7 +85,7 @@ def update_config():
     r = requests.get('http://localhost:4040/api/tunnels')
     ngrok_conf = r.json()
 
-    ngrok_endpoint = ngrok_conf['tunnels'][0]['public_url']
+    ngrok_endpoint = ngrok_conf['tunnels'][0]['public_url'] + '/webhook'
 
     url = "https://webexapis.com/v1/webhooks"
 
@@ -119,7 +119,7 @@ def update_config():
             db.create_collection('Alerts')
         if "Updates" not in col_list:
             db.create_collection('Updates', capped=True, size=5242880, max=1)
-            db.Updates.insert_one({[]})
+            db.Updates.insert_one({'init': 1})
 
     call(["systemctl", "restart", "kpi-engine-housekeeping.service"])
     call(["systemctl", "restart", "kpi-engine-app.service"])
