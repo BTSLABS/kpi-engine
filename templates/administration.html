@@ -5,40 +5,38 @@
         <title>Administration | BTS OBSERVER</title>
     </head>
     <body>
-        {% include 'common/sidebar.html' %}
-        <div class="main-content" style="height:auto;">
+        <div class="main-content">
             {% include 'common/header.html' %}
-            <div class="container">
-                <div class="col-12 mt-3 ">
+            {% include 'common/sidebar.html' %}
+            <div class="container-fluid">
+                <div class="col-12 d-xl-inline-flex mb-3" style="margin-top: 2.3rem;">
                     <div class="alert alert-success alert-dismissible fade show" style="display: none;position: fixed;z-index: 999;right: 5%;" role="alert">
                         <strong>Updated successfully!</strong>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="adminForm" class="form col-12  px-0  row justify-content-center">
-                        <div class="col-lg-4 ">
-                            <h5>Administration</h5>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group col-6">
+                    <div id="adminForm" class="form col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0 row justify-content-left">
+                        <h5 class="pl-3 pr-0 form-title">Administration</h5>
+                        <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-2">
+                            <div class="form-group col-12">
                                 <label for="cwapi">CW API:</label>
                                 <input type="text" class="form-control" id="cwapi" value="0.0.0.0" placeholder="CWD API">
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="username">User Name:</label>
                                 <input type="text" class="form-control" id="username" value="admin" placeholder="Username">
                             </div>
-                            <div class="form-group position-relative col-6">
+                            <div class="form-group position-relative col-12">
                                 <label for="password">Password:</label>
                                 <input type="password" class="form-control" id="password" placeholder="Password">
                             <span class="password-toggle" > <i  id="password-toggle" class="fas fa-eye"></i></span>
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="mongodb">MongoDB:</label>
                                 <input type="text" class="form-control" id="mongodb" placeholder="MongoDB" value="">
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="check_period">Check Period:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="check_period" placeholder="Check Period"
@@ -48,7 +46,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="track_time">Track Time:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="track_time" placeholder="Track Time"
@@ -59,25 +57,25 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="admin_email">Email:</label>
                                 <input type="email" class="form-control" id="admin_email" placeholder="Email" value="">
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="influxdb_ip">InfluxDB IP:</label>
                                 <input type="text" class="form-control" id="influxdb_ip" placeholder="Influxdb IP" value="0.0.0.0">
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="influxdb_port">InfluxDB Port:</label>
                                 <input type="text" class="form-control" id="influxdb_port" placeholder="Influxdb Port" value="8080">
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="influxdb_name">InfluxDB Name:</label>
                                 <input type="text" class="form-control" id="influxdb_name" placeholder="Influxdb Name"
                                     value="influx db">
                             </div>
 
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="auto_update">Auto Update:</label>
                                 <select class="form-control" id="auto_update">
                                     <option value="True">Yes</option>
@@ -85,48 +83,40 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <hr class="my-5">
-                        </div>
                     </div>
-                    <div id="webexForm" class="form col-12  px-0  row justify-content-center">
-                        <div class="col-md-4">
-                            <h5>Webex Integration</h5>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group col-6">
+                    <div id="webexForm" class="form col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0 row justify-content-left">
+                        <h5 class="pl-3 pr-0 form-title">Webex Integration</h5>
+                        <div class="col-xl-7 col-lg-9 col-md-12 col-sm-12 col-xs-12 pl-2">
+                            <div class="form-group col-12">
                                 <label for="apitoken">Webex Teams API Token:</label>
                                 <input type="text" class="form-control" id="webexapi_token" value="" placeholder="">
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="spaceid">Webex Teams Space ID:</label>
                                 <input type="text" class="form-control" id="room_id" value="" placeholder="">
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="ngrok">ngrok User Token:</label>
                                 <input type="text" class="form-control" id="ngrok_token" value="" placeholder="">
                             </div>
-                            <!-- <div class="form-group col-6">
+                            <!-- <div class="form-group col-12">
                                 <label for="email_notif">Enable email notifications</label>
                                 <select class="form-control" id="email_notf">
                                     <option value="True">Yes</option>
                                     <option value="False">No</option>
                                 </select>
                             </div> -->
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
                                 <label for="webex_enable">Enable Webex Teams notifications</label>
                                 <select class="form-control" id="webex_enable">
                                     <option value="True">Yes</option>
                                     <option value="False">No</option>
                                 </select>
                             </div>
-                            <div class="col-12 d-flex justify-content-start align-items-center">
-                                <button class="btn submit-button mt-2 " id="adminSub">Submit</button>
-                                <small style="padding-left: 10px;">Services will be restarted.</small>
+                            <div class="col-12 d-flex justify-content-end align-items-center">
+                                <small style="padding-right: 10px;">Services will be restarted.</small>
+                                <button class="btn submit-button" id="adminSub">Submit</button>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <hr>
                         </div>
                     </div>
                 </div>
