@@ -1,7 +1,7 @@
 import json
 import configparser
 from subprocess import call
-from requests import request
+import requests
 
 config = configparser.ConfigParser()
 
@@ -14,7 +14,7 @@ def get_ticket():
     }
     request_type = "POST"
 
-    ticket = request(request_type, get_conf('url')+"/crosswork/sso/v1/tickets?username="+get_conf('username')+"&password="+get_conf('password'), headers=headers, data=payload, verify=False).text
+    ticket = requests.request(request_type, get_conf('url')+"/crosswork/sso/v1/tickets?username="+get_conf('username')+"&password="+get_conf('password'), headers=headers, data=payload, verify=False).text
     return ticket
 
 def get_token():
@@ -25,7 +25,7 @@ def get_token():
       'Cache-Control': 'no-cache'
     }
     request_type = "POST"
-    token = request(request_type, get_conf('url')+"/crosswork/sso/v1/tickets/"+get_ticket(), headers=headers, data=payload, verify=False).text
+    token = requests.request(request_type, get_conf('url')+"/crosswork/sso/v1/tickets/"+get_ticket(), headers=headers, data=payload, verify=False).text
     return token
 
 
