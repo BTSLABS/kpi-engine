@@ -1,8 +1,33 @@
 import json
 import configparser
 from subprocess import call
+from requests import request
 
 config = configparser.ConfigParser()
+
+def get_ticket():
+    payload = ""
+    headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'text/plain',
+    'Cache-Control': 'no-cache'
+    }
+    request_type = "POST"
+
+    ticket = request(request_type, get_conf('url')+"/crosswork/sso/v1/tickets?username="+get_conf('username')+"&password="+get_conf('password'), headers=headers, data=payload, verify=False).text
+    return ticket
+
+def get_token():
+    payload='service=https%3A%2F%2F172.23.193.107%3A30603%2Fapp-dashboard'
+    headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'text/plain',
+      'Cache-Control': 'no-cache'
+    }
+    request_type = "POST"
+    token = request(request_type, get_conf('url')+"/crosswork/sso/v1/tickets/"+get_ticket(), headers=headers, data=payload, verify=False).text
+    return token
+
 
 def update_conf(conf_json):
     conf_dict = json.loads(conf_json)
@@ -26,7 +51,6 @@ def update_conf(conf_json):
     with open('configuration.ini', 'w') as configfile:
         config.write(configfile)
 
-
 def get_conf(field = 'all'):
     config.read('configuration.ini')
     conf_dict = {
@@ -44,7 +68,7 @@ def get_conf(field = 'all'):
         "room_id" : config['DEFAULT']['room_id'],
         "webexapi_token" : config['DEFAULT']['webexapi_token'],
         "ngrok_token" : config['DEFAULT']['ngrok_token'],
-        "webex_enable" : config['DEFAULT']['webex_enable']
+        "webex_enable" : config['DEFAULT']['webex_enable'],
     }
 
     conf_json = json.dumps(conf_dict)
